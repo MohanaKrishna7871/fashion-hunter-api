@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "b9896dc0-b3ef-49a0-bb70-45537f02b547",
+		"name": "FASHION_HUNTER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24221805"
+	},
+	"item": [
+		{
+			"name": "SITE_CONFIG",
+			"item": [
+				{
+					"name": "GET_SITE_CONFIG",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"GET_SITE_CONFIG\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"shopCodes\": [\r\n            \"REGISTERED_OFFICE\",\r\n            \"FACTORY\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_SITE_CONFIG",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"UPDATE_SITE_CONFIG\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        // To delete a config - use this key with 'Y'\r\n        // \"deleteInd\": \"Y\"\r\n        \"configId\": \"7d65ac06-b90b-428a-905a-bd8ed7ea11c4\",\r\n        \"configKey\": \"SITE_WEB\",\r\n        \"configValue\": \"www.fashionhunter.in\",\r\n        \"statusCode\": \"Y\",\r\n        \"deleteInd\": \"N\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD_SITE_CONFIG",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"ADD_SITE_CONFIG\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"shopCode\": \"REGISTERED_OFFICE\",\r\n        \"siteConfigs\": [\r\n            {\r\n                \"configKey\": \"SITE_EMAIL\",\r\n                \"configValue\": \"raghavan@fashionhunter.in\",\r\n                \"statusCode\": \"Y\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCT_CONFIG",
+			"item": [
+				{
+					"name": "ADD_PRODUCT_IMAGE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"ADD_PRODUCT_IMAGE\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"productName\": \"Adult\",\r\n        \"description\": \"Adult\",\r\n        \"statusCode\": \"Y\",\r\n        \"imageData\": \"mmmm\",\r\n        \"sortOrder\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_PRODUCTS_IMAGE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"GET_PRODUCTS_IMAGE\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"statusCode\": \"Y\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_PRODUCT_IMAGE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"UPDATE_PRODUCT_IMAGE\",\r\n        \"username\": \"ADMIN\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        // To delete a config - use this key with 'Y'\r\n        // \"deleteInd\": \"Y\"\r\n        \"productId\": \"b409bc96-0e1a-4f1f-86dc-8b0ee0f8e89a\",\r\n        \"productName\": \"Adult's\",\r\n        \"description\": \"Adult's\",\r\n        \"statusCode\": \"N\",\r\n        \"imageData\": \"\",\r\n        \"sortOrder\": 1,\r\n        \"deleteInd\": \"N\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER_DETAILS",
+			"item": [
+				{
+					"name": "ADD_NEW_USER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"ADD_NEW_USER\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"username\": \"Mohan\",\r\n        \"password\": \"Admin@123\",\r\n        \"email\": \"mohan.k@gmail.com\",\r\n        \"firstName\": \"Mohan\",\r\n        \"lastName\": \"Krishna\",\r\n        \"phoneNumber\": \"9876543210\",\r\n        \"roleCodes\": [\r\n            {\r\n                \"roleId\": \"1566ee33-b1e6-4403-ad0f-9514535fc52f\",\r\n                \"roleCode\": \"STANDARD_USER\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EDIT_USER_DETAILS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"EDIT_USER_DETAILS\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"username\": \"Mohana\",\r\n        \"email\": \"mohan.s@gmail.com\",\r\n        \"firstName\": \"Mohan\",\r\n        \"lastName\": \"Krishna\",\r\n        \"phoneNumber\": \"9876543210\",\r\n        \"status\": \"Y\",\r\n        \"userId\": \"13b6c2c0-c645-44f3-bfea-bc78640902ec\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_USER_DETAILS_BY_USER_ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"GET_USER_DETAILS_BY_USER_ID\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"userId\": \"1f9de06c-4a37-43fc-a8d4-f516379edf85\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_USER_BY_USER_ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"DELETE_USER_BY_USER_ID\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"userId\": \"9ff81306-ee77-4eb0-b32d-c34edfde38dc\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTHENTICATION",
+			"item": [
+				{
+					"name": "USER_LOGIN_AUTHENTICATION",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apiContext\": {\r\n        \"transactionId\": \"USER_LOGIN_AUTHENTICATION\",\r\n        \"username\": \"mohanakrishna\",\r\n        \"source\": \"COMPANY\",\r\n        \"protocol\": \"API\"\r\n    },\r\n    \"apiParams\": {\r\n        \"username\": \"admin\",\r\n        \"password\": \"Admin@123\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7801/api/v1/fashionHunter/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7801",
+							"path": [
+								"api",
+								"v1",
+								"fashionHunter",
+								"request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.fashion.hunter.dto.UserDTO" alias="UserDTO" />
+		<typeAlias type="com.fashion.hunter.dto.UserRoleDTO" alias="UserRoleDTO" />
+		<typeAlias type="com.fashion.hunter.dto.UserRolePermissionDTO" alias="UserRolePermissionDTO" />
+		<typeAlias type="com.fashion.hunter.dto.SiteConfigDTO" alias="SiteConfigDTO" />
+		<typeAlias type="com.fashion.hunter.dto.ProductDTO" alias="ProductDTO" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/mappers/fashionHunterMappers/UserMapper.xml"/>
+		<mapper resource="mybatis/mappers/fashionHunterMappers/UserLoginMapper.xml"/>
+		<mapper resource="mybatis/mappers/fashionHunterMappers/SiteConfigMapper.xml"/>
+		<mapper resource="mybatis/mappers/fashionHunterMappers/ProductMapper.xml"/>
+	</mappers>
+</configuration>

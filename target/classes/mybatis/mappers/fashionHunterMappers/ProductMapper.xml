@@ -1,0 +1,86 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fashion.hunter.dao.ProductDAO">
+
+	<resultMap id="ProductResultMap" type="com.fashion.hunter.dto.ProductDTO">
+	    <result property="productId"   column="product_id"/>
+	    <result property="productName" column="product_name"/>
+	    <result property="description" column="description"/>
+	    <result property="statusCode"  column="status_code"/>
+	    <result property="imageBytes"  column="image_data"/>
+	    <result property="sortOrder"   column="sort_order"/>
+	</resultMap>
+
+	
+	<insert id="insertProductImage">
+	    INSERT INTO app_product (
+	        product_name,
+	        description,
+	        status_code,
+	        image_data,
+	        sort_order,
+	        created_by,
+	        created_date_time,
+	        updated_by,
+	        updated_date_time
+	    )
+	    VALUES (
+	        #{productName},
+	        #{description},
+	        #{statusCode},
+	        #{imageBytes},
+	        #{sortOrder},
+	        #{createdBy},
+	        CURRENT_TIMESTAMP,
+	        #{updatedBy},
+	        CURRENT_TIMESTAMP
+	    )
+	</insert>
+	
+	<select id="getAllProductRecords" parameterType="com.fashion.hunter.dto.ProductDTO" resultMap="ProductResultMap">
+	    SELECT
+	        product_id,
+	        product_name,
+	        description,
+	        status_code,
+	        image_data,
+	        sort_order
+	    FROM app_product
+	    WHERE status_code = #{statusCode}
+	    ORDER BY
+	        product_name ASC,
+	        sort_order ASC,
+	        created_date_time ASC
+	</select>
+
+	<delete id="deleteProductImage">
+	    DELETE FROM app_product
+	    WHERE product_id = CAST(#{productId} AS UUID)
+	</delete>
+	
+	<update id="updateProductImage">
+	    UPDATE app_product
+	    <set>
+	        <if test="productName != null">
+	            product_name = #{productName},
+	        </if>
+	        <if test="description != null">
+	            description = #{description},
+	        </if>
+	        <if test="statusCode != null">
+	            status_code = #{statusCode},
+	        </if>
+	        <if test="imageBytes != null">
+	            image_data = #{imageBytes},
+	        </if>
+	        <if test="sortOrder != null">
+	            sort_order = #{sortOrder},
+	        </if>
+	        updated_by = #{updatedBy},
+	        updated_date_time = CURRENT_TIMESTAMP
+	    </set>
+	    WHERE product_id = CAST(#{productId} AS UUID)
+	      AND sort_order = #{sortOrder}
+	</update>
+		
+
+</mapper>

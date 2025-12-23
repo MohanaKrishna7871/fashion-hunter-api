@@ -1,0 +1,86 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fashion.hunter.dao.SiteConfigDAO">
+
+	<resultMap id="SiteConfigRowMap"
+		type="com.fashion.hunter.dto.SiteConfigDTO$SiteConfigRowDTO">
+
+		<result property="configId" column="config_id" />
+		<result property="shopCode" column="shop_code" />
+		<result property="configKey" column="config_key" />
+		<result property="configValue" column="config_value" />
+		<result property="statusCode" column="status_code" />
+
+	</resultMap>
+
+	<select id="getSiteConfigRows" resultMap="SiteConfigRowMap">
+
+		SELECT
+		config_id,
+		shop_code,
+		config_key,
+		config_value,
+		status_code
+		FROM app_site_config
+		WHERE shop_code IN
+		<foreach collection="shopCodes" item="code" open="(" close=")"
+			separator=",">
+			#{code}
+		</foreach>
+		AND status_code = 'Y'
+		ORDER BY shop_code, config_key
+
+	</select>
+
+	<update id="updateSiteConfigDetails">
+		UPDATE app_site_config
+		<set>
+			<if test="configValue != null">
+				config_value = #{configValue},
+			</if>
+			<if test="statusCode != null">
+				status_code = #{statusCode},
+			</if>
+			<if test="updatedBy != null">
+				updated_by = #{updatedBy},
+			</if>
+			updated_date_time = CURRENT_TIMESTAMP
+		</set>
+		WHERE config_id = CAST(#{configId} AS UUID)
+		AND config_key = #{configKey}
+	</update>
+	
+	<delete id="deleteSiteConfigDetails">
+	    DELETE FROM app_site_config
+	    WHERE config_id = CAST(#{configId} AS UUID)
+	      AND config_key = #{configKey}
+	</delete>
+	
+	<insert id="insertSiteConfig">
+	    INSERT INTO app_site_config (
+	        config_id,
+	        shop_code,
+	        config_key,
+	        config_value,
+	        status_code,
+	        created_by,
+	        created_date_time,
+	        updated_by,
+	        updated_date_time
+	    )
+	    <foreach collection="siteConfigs" item="item">
+	
+	        SELECT
+	            gen_random_uuid(),
+	            #{shopCode},
+	            #{item.configKey},
+	            #{item.configValue},
+	            #{item.statusCode},
+	            #{createdBy},
+	            CURRENT_TIMESTAMP,
+	            #{updatedBy},
+	            CURRENT_TIMESTAMP
+	    </foreach>
+	</insert>
+		
+
+</mapper>
