@@ -1,0 +1,30 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fashion.hunter.dao.UserLoginDAO">
+	
+    <resultMap id="UserMetaDataResultMap" type="UserDTO">
+	    <result property="username" column="user_name"/>
+	    <result property="userId" column="user_id"/>
+	    <result property="email" column="email"/>
+	    <result property="statusCode" column="status_code"/>
+	    <result property="firstName" column="first_name"/>
+	    <result property="lastName" column="last_name"/>
+	    <result property="phoneNumber" column="phone_number"/>
+	    <result property="password" column="password_hash"/>
+	
+	</resultMap>
+    
+    <select id="getUserDetailsByUserName" parameterType="java.util.Map" resultMap="UserMetaDataResultMap">
+        SELECT AUL.USER_NAME,
+			AUL.USER_ID,
+			AUL.EMAIL,
+			AUL.STATUS_CODE,
+			AUD.FIRST_NAME,
+			AUD.LAST_NAME,
+			AUD.PHONE_NUMBER,
+			AUL.PASSWORD_HASH
+		FROM APP_USER_LOGIN AUL
+		LEFT JOIN APP_USER_DETAILS AUD ON AUD.USER_ID = AUL.USER_ID
+		WHERE AUL.USER_NAME = #{apiParamMap.username}
+    </select>
+    
+</mapper>

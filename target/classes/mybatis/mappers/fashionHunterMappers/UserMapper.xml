@@ -1,0 +1,242 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fashion.hunter.dao.UserDAO">
+	
+<!-- ================= USER LOGIN ================= -->
+    <insert id="insertUserLogin">
+        INSERT INTO app_user_login (
+        	user_id,
+            user_name,
+            password_hash,
+            email,
+            status_code,
+            is_locked,
+            last_login_date_time,
+            password_changed_date_time,
+            created_by,
+            created_date_time,
+            updated_by,
+            updated_date_time
+        )
+        VALUES (
+        	CAST(#{apiParamMap.userId} AS UUID),
+            #{apiParamMap.username},
+            #{apiParamMap.password},
+            #{apiParamMap.email},
+            #{apiParamMap.statusCode},
+            #{apiParamMap.isLocked},
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP,
+            #{apiParamMap.createdBy},
+            CURRENT_TIMESTAMP,
+            #{apiParamMap.updatedBy},
+            CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <!-- ================= USER DETAILS ================= -->
+    <insert id="insertUserDetails">
+        INSERT INTO app_user_details (
+            user_id,
+            first_name,
+            last_name,
+            phone_number,
+            created_by,
+            created_date_time,
+            updated_by,
+            updated_date_time
+        )
+        VALUES (
+            CAST(#{apiParamMap.userId} AS UUID),
+            #{apiParamMap.firstName},
+            #{apiParamMap.lastName},
+            #{apiParamMap.phoneNumber},
+            #{apiParamMap.createdBy},
+            CURRENT_TIMESTAMP,
+            #{apiParamMap.updatedBy},
+            CURRENT_TIMESTAMP
+        )
+    </insert>
+    
+    <select id="findActiveRole" resultType="map">
+	    SELECT role_id, role_code
+	    FROM app_role
+	    WHERE status_code = #{statusCode}
+	      AND (
+	            (#{roleId} IS NOT NULL AND role_id = CAST(#{roleId} AS UUID))
+	         OR (#{roleId} IS NULL AND role_code = #{roleCode})
+	      )
+	</select>
+
+    <!-- ================= USER ROLE ================= -->
+	<insert id="insertUserRole">
+	    INSERT INTO app_user_role (
+	        user_id,
+	        user_name,
+	        role_id,
+	        role_code,
+	        created_by,
+	        created_date_time,
+	        updated_by,
+	        updated_date_time
+	    )
+	    VALUES (
+	        CAST(#{user.userId} AS UUID),
+	        #{user.username},
+	        CAST(#{roleId} AS UUID),
+	        #{roleCode},
+	        #{user.createdBy},
+	        CURRENT_TIMESTAMP,
+	        #{user.updatedBy},
+	        CURRENT_TIMESTAMP
+	    )
+	</insert>
+	
+	<select id="checkUserConflict" resultType="map">
+	    SELECT
+	        EXISTS (
+	            SELECT 1
+	            FROM app_user_login
+	            WHERE email IS NOT NULL
+	              AND UPPER(email) = UPPER(#{email})
+	        ) AS email_exists,
+	
+	        EXISTS (
+	            SELECT 1
+	            FROM app_user_login
+	            WHERE user_name IS NOT NULL
+	              AND UPPER(user_name) = UPPER(#{username})
+	        ) AS username_exists
+	</select>
+	
+	<resultMap id="UserDetailsResultMap" type="UserDTO">
+
+	    <!-- User -->
+	    <id property="userId" column="user_id"/>
+	    <result property="username" column="user_name"/>
+	    <result property="email" column="email"/>
+	    <result property="statusCode" column="status_code"/>
+	    <result property="firstName" column="first_name"/>
+	    <result property="lastName" column="last_name"/>
+	    <result property="phoneNumber" column="phone_number"/>
+	
+	    <!-- Roles -->
+	    <collection property="roleCodes" ofType="UserRoleDTO">
+	        <id property="roleId" column="role_id"/>
+	        <result property="roleCode" column="role_code"/>
+	        <result property="roleName" column="role_name"/>
+	        <result property="roleDesc" column="role_desc"/>
+	
+	        <!-- Permissions -->
+	        <collection property="userRolePermission" ofType="UserRolePermissionDTO">
+	            <id property="permissionId" column="permission_id"/>
+	            <result property="permissionCode" column="permission_code"/>
+	            <result property="permissionName" column="permission_name"/>
+	            <result property="permissionDesc" column="permission_desc"/>
+	        </collection>
+	    </collection>
+	
+	</resultMap>
+
+
+	<select id="getUserDetailsByUserId" parameterType="java.util.Map" resultMap="UserDetailsResultMap">
+        SELECT AUL.USER_NAME,
+			AUL.USER_ID,
+			AUL.EMAIL,
+			AUL.STATUS_CODE,
+			AUD.FIRST_NAME,
+			AUD.LAST_NAME,
+			AUD.PHONE_NUMBER,
+			AUR.ROLE_ID,
+			AUR.ROLE_CODE,
+			AR.ROLE_NAME,
+			AR.DESCRIPTION AS ROLE_DESC,
+			ARP.PERMISSION_ID,
+			AP.PERMISSION_CODE,
+			AP.PERMISSION_NAME,
+			AP.DESCRIPTION AS PERMISSION_DESC
+		FROM APP_USER_LOGIN AUL
+		LEFT JOIN APP_USER_DETAILS AUD ON AUD.USER_ID = AUL.USER_ID
+		LEFT JOIN APP_USER_ROLE AUR ON AUR.USER_ID = AUL.USER_ID
+		LEFT JOIN APP_ROLE_PERMISSION ARP ON ARP.ROLE_ID = AUR.ROLE_ID
+		LEFT JOIN APP_ROLE AR ON AR.ROLE_ID = AUR.ROLE_ID
+		LEFT JOIN APP_PERMISSION AP ON AP.PERMISSION_ID = ARP.PERMISSION_ID
+		WHERE AUL.USER_ID = CAST(#{userId} AS UUID)
+    </select>
+    
+    <resultMap id="UserMetaDataResultMap" type="UserDTO">
+
+	    <result property="username" column="user_name"/>
+	    <result property="email" column="email"/>
+	    <result property="statusCode" column="status_code"/>
+	    <result property="firstName" column="first_name"/>
+	    <result property="lastName" column="last_name"/>
+	    <result property="phoneNumber" column="phone_number"/>
+	
+	</resultMap>
+    
+    <select id="getUserMetaData" parameterType="java.util.Map" resultMap="UserMetaDataResultMap">
+        SELECT AUL.USER_NAME,
+			AUL.USER_ID,
+			AUL.EMAIL,
+			AUL.STATUS_CODE,
+			AUD.FIRST_NAME,
+			AUD.LAST_NAME,
+			AUD.PHONE_NUMBER,
+			AUL.PASSWORD_HASH
+		FROM APP_USER_LOGIN AUL
+		LEFT JOIN APP_USER_DETAILS AUD ON AUD.USER_ID = AUL.USER_ID
+		WHERE AUL.USER_ID = CAST(#{userId} AS UUID)
+    </select>
+    
+    <update id="updateUserLogin" parameterType="UserDTO">
+	    UPDATE APP_USER_LOGIN
+	    <set>
+	        <if test="username != null">
+	            USER_NAME = #{username},
+	        </if>
+	        <if test="email != null">
+	            EMAIL = #{email},
+	        </if>
+	        <if test="statusCode != null">
+	            STATUS_CODE = #{statusCode},
+	        </if>
+	        <!-- updated_by should always be updated -->
+	        UPDATED_BY = #{updatedBy},
+	        UPDATED_DATE_TIME = CURRENT_TIMESTAMP
+	    </set>
+	    WHERE USER_ID = CAST(#{userId} AS UUID)
+	</update>
+	    
+	 <update id="updateUserDetails" parameterType="UserDTO">
+	    UPDATE APP_USER_DETAILS
+	    <set>
+	        <if test="firstName != null">
+	            FIRST_NAME = #{firstName},
+	        </if>
+	        <if test="lastName != null">
+	            LAST_NAME = #{lastName},
+	        </if>
+	        <if test="phoneNumber != null">
+	            PHONE_NUMBER = #{phoneNumber},
+	        </if>
+	        <!-- updated_by should always be updated -->
+	        UPDATED_BY = #{updatedBy},
+	        UPDATED_DATE_TIME = CURRENT_TIMESTAMP
+	    </set>
+	    WHERE USER_ID = CAST(#{userId} AS UUID)
+	</update>
+		 
+	<delete id="deleteUserByUserId" parameterType="string">
+	    WITH deleted_roles AS (
+	        DELETE FROM APP_USER_ROLE
+	        WHERE USER_ID = CAST(#{userId} AS UUID)
+	    ),
+	    deleted_details AS (
+	        DELETE FROM APP_USER_DETAILS
+	        WHERE USER_ID = CAST(#{userId} AS UUID)
+	    )
+	    DELETE FROM APP_USER_LOGIN
+	    WHERE USER_ID = CAST(#{userId} AS UUID)
+	</delete>
+	
+</mapper>
